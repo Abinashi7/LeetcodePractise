@@ -1,0 +1,41 @@
+class Solution {
+    
+    // This solution no extra space unlike the solution in which take extra array to save all the numbers in their 
+    // appropriate indexes and find out which one is missing. 
+    // To do it in O(n) with no extra space we can mutate the existing array with -ves 
+    // to make sure that the given index is present in the array.
+    // In the 2nd pass, if a given element in the array is -ve it shows that the particular number is missing
+    // tn. = O(n+n) = O(n)
+    // sc = O(1)
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        
+        List<Integer> result = new ArrayList<>();
+        //edge case
+        if(nums == null || nums.length == 0) return result;
+        
+        // first pass
+        
+        for(int i=0; i < nums.length; i++){
+           // [-4,-3,-2,-7,8,2,-3,-1]
+            int index = Math.abs(nums[i]); // 4,3,2,7,8,2,3,1
+            
+            if(nums[index-1] > 0){ // nums[3], nums[2], nums[1], nums[6],nums[7],nums[1],nums[2],nums[0]
+                nums[index-1] = -nums[index-1]; // [-4,-3,-2,-7,8,2,-3,-1]
+            }
+            
+        }
+        
+        // 2nd pass to check the +ves..which means missing number
+        
+        for(int i=0; i <nums.length; i++){
+            
+            if(nums[i] > 0){
+                result.add(i+1);
+            }
+            
+        }
+        
+        return result;
+        
+    }
+}
