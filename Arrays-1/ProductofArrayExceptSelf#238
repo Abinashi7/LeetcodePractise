@@ -1,0 +1,42 @@
+class Solution {
+    
+    // This is a two pass algorithm where we calculate the running sum each time.
+    // In the first pass we calculate the running sum from left to right
+    // In the first pass we calculate the running sum from right to left
+    // Tc = O(n + n) = O(n)
+    // Sc= O(1) since we are returning the array as an answer
+    
+    public int[] productExceptSelf(int[] nums) {
+        
+        
+        if(nums == null || nums.length == 0) return new int[0];
+        
+        int[] result = new int[nums.length];
+        
+        // running sum and temp variable to store the current element in the array
+        int rs = 1, temp=1;
+        
+        //first pass
+        for(int i=0; i < nums.length;i++){
+            
+            rs = rs * temp; // 1,1,1*2,2*3,
+            result[i] = rs; // --> [1,1,2,6]
+            temp = nums[i];// 1,2,3,4
+        }
+        
+        rs =1;temp=1;
+        
+         //2nd pass right to left
+        for(int i=nums.length-1; i >= 0; i-- ){
+            // cur res [1,1,2,6]
+            rs = rs * temp; // 1, 1*4, 4*2
+            result[i] = result[i]*rs; // [,2412,8,6] <--
+            temp = nums[i];// 4,3,2
+        }
+        
+        return result;
+        
+        
+        
+    }
+}
