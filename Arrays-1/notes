@@ -1,0 +1,15 @@
+LECTURE-10 ARRAYS
+
+1.	Diagonal Traverse #498 medium
+a.	Tn = m*n
+b.	Sc = constant
+2.	Spiral matrix #54 medium
+a.	Tn = m*n
+b.	Sc = constant
+3.	Product of array except itself
+a.	// This is a two-pass algorithm where we calculate the running sum each time.
+b.	    // In the first pass we calculate the running sum from left to right
+c.	    // In the first pass we calculate the running sum from right to left
+d.	    // Tc = O(n + n) = O(n)
+e.	    // Sc= O(1) since we are returning the array as an answer
+
