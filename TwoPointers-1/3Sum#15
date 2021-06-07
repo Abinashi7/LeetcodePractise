@@ -1,43 +1,44 @@
 class Solution {
+    // This is solution that is solved using pointers. We used three pointers here.
+    // First sort the array
+    // then fix one pointer at an index .. will go from 0..n
+    // at the same time, make two more pointers. Low = i+1 and high = nums.length
+    // when the sum of the elements at these three pointers are less than 0 then we move low pointer
+    // when the sum of the elements at these three pointers is greater than 0 then we move high pointer
+    // when the sum of the elements at these three pointers is less than 0 then we move low pointer
+    // when the sum of the elements at these three pointers is 0 then we add these three elements 
+    //tc = nlogn + n^2 = n^2
+    // sc = constant
     public List<List<Integer>> threeSum(int[] nums) {
         
         List<List<Integer>> result = new ArrayList<>();
-        // int sum =0;
+        if(nums == null || nums.length < 3) return result;
         Arrays.sort(nums);
-        int size = nums.length;
-        for(int i=0; i < nums.length-2; i++){
+        for(int i=0; i< nums.length-2; i++){
             
-            int j = i+1;
-            int k = nums.length-1;
-            while(j < k){
-                int sum = nums[i] + nums[j] + nums[k];
+            int low= i+1, high = nums.length-1;
+            if(i > 0 && nums[i] == nums[i-1]) continue;
             
-            if( sum == 0){
-                result.add(Arrays.asList(nums[i],nums[j],nums[k]));
-                
-//                 check for the duplicates and skipping them
-                int leftNum = nums[j];
-                while( j < size && leftNum == nums[j] ){
-                    j++;
-                }
-                
-                int rightNum = nums[k];
-                while( k > j && rightNum == nums[k]){
-                    k--;
-                }
-            }else if( sum > 0){
-                k--;
-            }else if( sum < 0){
-                j++;
-            }
-        }
+            while(low < high){
+                int ans = nums[i]+nums[low]+nums[high];
+                if(ans == 0){
+                    result.add(Arrays.asList(nums[i],nums[low],nums[high]));
+                    low++; high--;
+                    
+                    while(low < high && nums[low] == nums[low-1]) low++;
+                    while(low < high && nums[high] == nums[high+1]) high--;
 
-//         getting rid of duplicates when it comes to current element or i
-            while( i+1 < size && nums[i] == nums[i+1]){
-                i++;
+                    
+                }else if(ans > 0){
+                    high--;
+                }else{
+                    low++;
+                }
             }
-    }
+
+        }
         
         return result;
-}
+        
+    }
 }
