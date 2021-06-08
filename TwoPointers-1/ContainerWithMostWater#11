@@ -1,0 +1,27 @@
+class Solution {
+    
+    // This is two pinter algorith that finds out the max area.
+    // Use two pointers starting at 0 and height.length
+    // Move the low pointer if the height is lesser than the high pointer.. and vice versa
+    // tn = O(n)
+    // sc = constant
+    public int maxArea(int[] height) {
+        
+        if(height == null) return 0;
+        
+        int low=0, high=height.length-1, max=0;
+        
+        while( low < high){
+            int area = Math.min(height[low], height[high]) * (high-low);
+            max = Math.max(max, area);
+            if(height[low] < height[high] ){
+                low++;
+            }else{
+                high--;
+            }
+        }
+        
+        return max;
+        
+    }
+}
