@@ -1,0 +1,35 @@
+class Solution {
+    // This is a three pointer algo aslo called Dutch sort algo
+    // Since there are three (colors) numbers to sort, We can have a pointer for each number
+    // left. mid, high = 0,1,2
+    // tn = O(n)
+    // sc = constant
+    public void sortColors(int[] nums) {
+        
+        
+        if(nums == null || nums.length==0) return;
+        
+        int low=0, mid=0, high=nums.length-1;
+        
+        while(mid <= high){
+            
+            if(nums[mid] == 1){
+                mid++;
+            }else if(nums[mid] == 2){
+                
+                swap(nums, mid,high);
+                high--;
+            }else{
+                swap(nums, low, mid);
+                low++;mid++;
+            }
+        }
+        
+    }
+    
+    private void swap(int nums[], int i, int j){
+        int temp = nums[j];
+        nums[j] = nums[i];
+        nums[i] = temp;
+    }
+}
