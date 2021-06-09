@@ -1,0 +1,40 @@
+// This is a linear solution with no extra space
+// Concept of slow and fast pointers can be used here
+// tn = O(n)
+// sc = constant
+
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        
+        if(nums == null || nums.length == 0) return 0;
+        
+        int slow=0, fast=1;
+        Boolean flag=false; // we will turn this flag true when we see a duplicate number
+        
+        while(fast < nums.length){
+            
+            if(nums[slow] == nums[fast]){
+                
+                if(!flag){ // if we have not seen any duplicates of this number yet
+                    
+                    flag=true;
+                    slow++;
+                    nums[slow] = nums[fast];
+                    fast++;
+                    
+                }else{
+                    while(fast < nums.length && nums[slow] == nums[fast]) fast++; // move until we see a unique item
+                }
+                
+            }else{
+                flag=false;
+                slow++;
+                nums[slow] = nums[fast];
+                fast++;
+            }
+            
+        }
+        
+        return slow+1;
+    }
+}
