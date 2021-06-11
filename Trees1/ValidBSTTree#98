@@ -59,3 +59,26 @@ class Solution {
         
     }
 }
+
+/** This is another recursive solution where time and space complexity stays the same. We set the min and max when we make a move to left or a right child. This way
+we check for the breaching condition and returns true if it was never breached.
+*/
+
+class Solution {
+    
+    private boolean helper(TreeNode root, Integer min, Integer max){
+        // base conditions
+        if(root == null) return true;
+        
+        if( (min != null && root.val <= min ) || (max != null && root.val >= max )) return false;
+        // logic
+        return helper(root.left, min, root.val) && helper(root.right, root.val, max);
+        
+        
+    }
+    public boolean isValidBST(TreeNode root) {
+        
+        return helper(root, null, null); 
+        
+    }
+}
