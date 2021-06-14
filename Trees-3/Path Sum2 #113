@@ -35,3 +35,46 @@ class Solution {
         
     }
 }
+
+
+/**
+Optimized solution where instead of copying array elements in each of the recursive call,
+we undo the decision from the last branch by backtracking and move on to other nodes and 
+see if the branch sum matches with the target
+Tn = O(n)
+sc = O(n)
+*/
+class Solution {
+    List<List<Integer>> result;
+    int target;
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        result = new ArrayList<>();
+        target = targetSum;
+        List<Integer> temp = new ArrayList<>();
+        
+        helper(root, temp, 0);
+        
+        return result;
+    }
+    
+    
+    private void helper(TreeNode root, List arr, int sum){
+        // base
+        if(root == null) return;
+        // action
+        
+        sum += root.val;
+        arr.add(root.val);
+        if(root.left == null && root.right == null && sum ==target){
+                result.add(new ArrayList<>(arr));
+        }
+        // recurse
+        helper(root.left, arr, sum);
+        helper(root.right, arr, sum);
+        
+        // backtrack
+        arr.remove(arr.size()-1); // undoing the last decision while recursing back
+
+        
+    }
+}
