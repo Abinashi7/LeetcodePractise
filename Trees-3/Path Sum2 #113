@@ -1,0 +1,37 @@
+/** This is a brute force recursive solution. Basically, we visit every node until leaf and
+add the sum. If it is matching the target, we add in the resultant array.
+Tn = O(n^2) copying of each element to a new array makes it n square
+sc = H*n where H is the height of the tree and n is the max num of elements in array
+*/
+class Solution {
+    List<List<Integer>> result = new ArrayList<>();
+    int target;
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        
+        if(root == null) return result;
+        List<Integer> ls = new ArrayList<>();
+        target = targetSum;        
+        
+        helper(root, ls, 0);
+        
+        return result;
+    }
+    
+    
+    private void helper(TreeNode root, List temp, int sum){
+        // base
+        if(root == null) return;
+        // logic
+        sum += root.val; //5, 9, 
+        temp.add(root.val); // [5, 9]
+        if(root.left == null && root.right==null){
+            if(sum == target){
+               result.add(temp); 
+            } 
+        }
+        
+        helper(root.left, new ArrayList<>(temp), sum); // [5]
+        helper(root.right, new ArrayList<>(temp), sum);
+        
+    }
+}
