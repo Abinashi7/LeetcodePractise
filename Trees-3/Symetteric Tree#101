@@ -1,0 +1,24 @@
+/**
+Recursive solution
+tn = O(n)
+sc = O(h) 
+*/
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        
+        if(root == null) return true;
+        
+        return helper(root.left, root.right);
+        
+    }
+    
+    private boolean helper(TreeNode l, TreeNode r){
+        // base
+        if(r == null && l == null) return true;
+        // logic
+        if( l == null || r == null || l.val != r.val ) return false;
+        // recurse
+        return helper(l.left, r.right) && helper(l.right, r.left);
+
+    }
+}
