@@ -22,3 +22,30 @@ class Solution {
 
     }
 }
+
+
+// iterative solution using stacks
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        
+        Stack<TreeNode> s = new Stack<>();
+       
+        s.push(root.left);
+        s.push(root.right);
+        
+        while(!s.isEmpty()){
+            // [3,3,4,4] 
+            TreeNode left = s.pop(); 
+            TreeNode right = s.pop(); 
+            if(left == null && right == null) continue;
+            if(left == null || right == null || left.val != right.val) return false;
+            
+            s.push(left.left); // []
+            s.push(right.right);
+            
+            s.push(left.right);
+            s.push(right.left);
+        }
+        return true;
+    }
+}
