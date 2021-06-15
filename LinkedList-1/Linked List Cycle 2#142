@@ -1,0 +1,22 @@
+/**
+Solution by changing the value of the node to a max value and returning the node when found the same value is found again.
+Tn = O(n)
+sc = O(1)
+*/
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        
+        ListNode temp = head;
+        while(temp != null){
+            if(temp.val != Integer.MAX_VALUE){
+                temp.val = Integer.MAX_VALUE;
+                temp = temp.next;
+            }else{
+                return temp;
+            }
+        }
+        
+        return null;
+        
+    }
+}
