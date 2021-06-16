@@ -1,0 +1,25 @@
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        
+        ListNode dummy = new ListNode(0); // dummy node is included for the edge cases where we only have 1 elmnt in the list and it has to be removed
+        dummy.next = head;
+        
+        //Initially both the slow and fast pointers are pointing to the dummy node
+        ListNode slow = dummy;
+        ListNode fast = dummy;
+        int count = 0; // itearator to iterate till (Total number of elments - n) position. This will give an idea of how many positions the slow pointers has to move to reach the nth node to delete.
+        
+        while( count <= n){
+            fast = fast.next;
+            count++;
+        }
+        
+        while(fast != null){
+            slow = slow.next;
+            fast = fast.next;
+        }
+        slow.next = slow.next.next;
+        
+        return dummy.next; // returning the head of the list
+    }
+}
