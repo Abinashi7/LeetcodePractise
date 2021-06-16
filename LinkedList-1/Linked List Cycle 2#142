@@ -20,3 +20,35 @@ public class Solution {
         
     }
 }
+
+/**
+Slow and fast pointer solution. 
+tn=O(n + n) = n where n is num of elements in LL
+sc=O(1)
+*/
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        
+        ListNode slow= head;
+        ListNode fast= head;
+        boolean flag = false;
+        
+        while(fast != null && fast.next != null){
+            slow = slow.next; // slow is 1x speed
+            fast = fast.next.next; // fast is 2x speed
+            
+            if(slow == fast){// this is a pt where both pointers met not the point where the cycle is found
+                flag = true;  // flag if circle is found
+                break; 
+            }
+        }
+        if(!flag) return null; // means no circle found
+        slow = head; // reset the slow ptr 
+        
+        while(slow != fast){ // the meeting pt will be the one where cycle occured 
+            slow = slow.next; // 1x speed
+            fast = fast.next; // 1x speed
+        }
+        return slow;
+    }
+}
