@@ -19,3 +19,21 @@ class Solution {
         
     }
 }
+
+
+// recursive solution
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        //base
+        if(head == null || head.next == null) return head;
+        
+        //recurse
+        ListNode root = reverseList(head.next);
+        
+        head.next.next = head; // reversal step
+        head.next = null;
+        
+        return root;
+        
+    }
+}
