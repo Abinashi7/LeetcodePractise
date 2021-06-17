@@ -1,0 +1,35 @@
+/**
+We can solve this using controlled recursion. Controlled recursion means it will pop up the desired element when the next() is called. 
+We can use a stack DS where we can add (h) elements in the stack in the in-order manner.
+tn = O(n) where n is the num of elements
+sc = O(h) where h is the max height of the stack
+*/
+class BSTIterator {
+    Stack<TreeNode> st;
+    public BSTIterator(TreeNode root) {
+        st = new Stack<>();
+        dfs(root); // building stack in in-order manner
+    }
+    
+    public int next() {
+        TreeNode e = st.pop();
+        
+        dfs(e.right); // filling in elements of right sub trees
+        
+        return e.val;
+        
+    }
+    
+    public boolean hasNext() {
+        return !st.isEmpty();
+    }
+    
+    // depth first search. Going to left until leaf
+    private void dfs(TreeNode root){
+        while(root != null){
+            st.push(root);
+            root = root.left;
+        }
+        
+    }
+}
