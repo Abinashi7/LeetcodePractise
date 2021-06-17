@@ -1,0 +1,52 @@
+/**
+This is an iterative solution where we find the len of both of the LLs. Then calculate the difference between two lengths to find a starting point for the longer LL.
+Tn = m + n. where m and n are the size of two given LLs. 
+sc = O(1)
+*/
+public class Solution {
+    
+    private int findSize(ListNode head){
+        
+        int size = 0;
+        
+        while(head != null){
+            head = head.next;
+            size++;
+        }
+        
+        return size;
+        
+    }
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        
+        if(headA == null || headB == null) return null;
+            
+            ListNode temp = headA;
+        
+        int sizeA = findSize(temp);
+        
+        temp = headB;
+        int sizeB = findSize(temp);
+        
+        
+        
+            while(sizeA > sizeB){
+                headA = headA.next;   
+                sizeA--;
+            }
+       
+            while(sizeB > sizeA){
+                headB = headB.next;   
+                sizeB--;
+            }
+        
+        
+        while(headA != headB){
+            headA = headA.next; 
+            headB = headB.next; 
+            
+        }
+        
+        return headA;
+    }
+}
