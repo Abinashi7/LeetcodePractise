@@ -1,0 +1,51 @@
+/**
+This is three step iterative algorithm.
+1. Find the mid of the LL
+2. Reverse the list from mid to end
+3. connect the two ends according to the problem given
+
+tn = O(n)
+sc= O(1)
+*/
+class Solution {
+    
+    private ListNode reverse(ListNode head){
+        // base
+        if(head == null || head.next == null) return head;
+        
+        // recurse
+        ListNode root = reverse(head.next);
+        head.next.next = head;
+        head.next =null;
+        return root;
+    }
+    public void reorderList(ListNode head) {
+        
+        if(head == null) return;
+        
+        // step 1
+        ListNode slow = head; ListNode fast = head;
+        
+        while(fast.next != null && fast.next.next != null){
+            slow = slow.next; // 1x speed
+            fast= fast.next.next; // 2x speed
+        }
+        
+        // step 2
+         fast = reverse(slow.next);
+         slow.next = null; // ending the first half of the list
+         slow = head; // resetting the head ptr
+        // step 3
+        ListNode cur = null;
+        slow = head; // reset the slow pointer to the head pointer
+        
+        while(fast != null){
+            cur = slow.next;
+            slow.next = fast;
+            fast = fast.next;
+            slow.next.next = cur;
+            slow= cur;
+        }
+        
+    }
+}
