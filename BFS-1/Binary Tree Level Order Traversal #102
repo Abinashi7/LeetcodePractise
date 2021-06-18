@@ -1,0 +1,35 @@
+/**
+This is an iterative Breath first traversal solution. In this method we can use Queue to store elements of a particular level and add that level's chilren to the queue. 
+tn = O(n) where n is num of elements in the tree
+sc = O(2^h) or O(n/2) where h is the height of tree. n is num of elements in the tree
+The space complexity is n/2 because if it is a complete tree the leaf nodes will be qual to n / 2
+*/
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> ls = new ArrayList<>();
+        if(root == null) return ls;
+
+            
+        
+        Queue<TreeNode> q = new LinkedList<>();
+        
+        q.add(root);
+        
+        while(!q.isEmpty()){
+            int size = q.size();
+            List<Integer> temp = new ArrayList<>();
+            
+            for(int i=0; i < size; i++){
+                TreeNode cur = q.poll();
+                
+                if(cur.left != null) q.add(cur.left);
+                if(cur.right != null) q.add(cur.right);
+                temp.add(cur.val);
+            }
+            
+            ls.add(temp);
+        }
+        
+        return ls;
+    }
+}
