@@ -1,0 +1,47 @@
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        if( prerequisites == null && numCourses == 0) return false;
+        
+        int [] preReqsCount = new int[numCourses];
+        HashMap <Integer,List<Integer>> map = new HashMap<>();
+        
+        // filling the pre requisite count per subject
+        
+        for(int i=0; i< prerequisites.length; i++){
+            int subject= prerequisites[i][0];
+            int pr =  prerequisites[i][1];
+            preReqsCount[subject]++;
+            if(!map.containsKey(pr)){
+                map.put(pr, new ArrayList<>());
+                }
+                map.get(pr).add(subject);
+            }
+        
+       Queue<Integer> q = new LinkedList<>();
+        // add the starting point in the queue
+        for(int i=0; i < preReqsCount.length; i++){
+            if(preReqsCount[i] == 0) q.add(i);
+        }
+        
+        while(!q.isEmpty()){
+            int preReq = q.poll();
+            
+            if(map.containsKey(preReq)){
+                List<Integer> ls = map.get(preReq);
+                for(int pr: ls){
+                    preReqsCount[pr]--;
+                    if(preReqsCount[pr]==0){
+                        q.add(pr);
+                    }
+                }
+            }
+        }
+        
+        for(int i=0; i< preReqsCount.length; i++){
+            if(preReqsCount[i] > 0) return false;
+        }
+        
+        return true;
+        
+    }
+}
