@@ -27,3 +27,34 @@ class Solution {
         
     }
 }
+
+====== DFS Solution ======
+
+/**
+Recurive DFS solution. Taking help of level numbers to always get the elements in the right side view. However, rather than recursing on the left side first, we will recurse right side first so that the right side view elements can be added first in the resultant list.
+Tn = O(n) where n is the num of elements in the tree
+sc = O(2^h) or n/2 = n .. where h is the height of the tree. N is the num of elmts in tree
+*/
+class Solution {
+    List<Integer> ls;  
+    public List<Integer> rightSideView(TreeNode root) {
+        ls = new ArrayList<>();
+        if(root == null) return ls;
+        
+        dfs(root,0);
+        
+        return ls;
+    }
+    private void dfs(TreeNode root, int level){
+        // base
+        if(root == null) return;
+        // action
+        if(level == ls.size()){
+            ls.add(root.val);
+        }
+        // recurse
+        dfs(root.right, level+1);
+        dfs(root.left, level+1);
+        
+    }
+}
