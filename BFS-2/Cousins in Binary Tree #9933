@@ -34,3 +34,45 @@ class Solution {
         
     }
 }
+
+/// DFS ////
+
+/**
+Iterative BFS solution in which we consider elements of the particular level and compare the requirements. 
+tn = O(n)
+s =(2^h)
+*/
+
+class Solution {
+    public boolean isCousins(TreeNode root, int x, int y) {
+        
+        if(root == null) return false;
+        
+        Queue<TreeNode> q = new LinkedList<>();
+        
+        
+        q.add(root);
+        while(!q.isEmpty()){
+            
+            int size = q.size();
+            boolean x_found = false;
+            boolean y_found = false;
+            for(int i= 0; i< size; i++){
+                TreeNode cur = q.poll();
+                if(cur.val == x) x_found = true;
+                if(cur.val == y) y_found = true;
+                if(cur.left != null && cur.right != null){
+                    // check to see if both x,y might belong to same element
+                    if(cur.left.val == x && cur.right.val == y) return false; // false coz cannot belong to same parent
+                    if(cur.right.val == x && cur.left.val == y) return false;
+                    
+                }
+                    if(cur.left!= null ) q.add(cur.left);
+                    if(cur.right!= null ) q.add(cur.right);
+            }
+            if(x_found && y_found) return true;
+
+        }
+        return false;
+    }
+}
