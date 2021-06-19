@@ -1,0 +1,29 @@
+/**
+Iterative BFS solution. We can notice that onlu the right side view of the binary tree is required. if an array of a particular level's elements are taken, the last element of the array will be always on the right side view. 
+Tn = O(n) where n is the num of elements in the tree
+sc = O(2^h) or n/2 = n .. where h is the height of the tree. N is the num of elmts in tree
+*/
+class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> ls = new ArrayList<>();
+        if(root == null) return ls;
+        
+        Queue<TreeNode> q = new LinkedList<>();
+        
+        q.add(root);
+        
+        while(!q.isEmpty()){
+            int size = q.size();
+            for(int i=0; i<size; i++){
+                TreeNode cur = q.poll();  
+                if(i == size-1) ls.add(cur.val); // always getting the last element 
+                
+                if(cur.left != null) q.add(cur.left);
+                if(cur.right != null) q.add(cur.right);
+            }
+        }
+        
+        return ls;
+        
+    }
+}
