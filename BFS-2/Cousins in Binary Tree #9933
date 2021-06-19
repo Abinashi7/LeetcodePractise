@@ -1,0 +1,36 @@
+/**
+Recursive DFS solution in which we try to find if x and y exists. If so, then store their parents and depth level. With this info we can conclude that they're cousins or not. 
+tn = O(n) where n is the num of elements in the tree
+sc= O(h) height of the recursive stack or height of tree
+*/
+class Solution {
+    int x_level;
+    int y_level;
+    TreeNode x_root;
+    TreeNode y_root;
+    
+    public boolean isCousins(TreeNode root, int x, int y) {
+        if(root == null) return false;
+        
+        dfs(root, x, y, 0, null);
+        return x_level == y_level && x_root != y_root;
+    }
+    
+    private void dfs(TreeNode root, int x, int y, int level, TreeNode parent){
+        
+        // edge
+        if(root == null) return;
+        // action
+        if(root.val == x){
+            x_level = level;
+            x_root = parent;
+        }else if(root.val == y){
+            y_level = level;
+            y_root = parent;
+        }
+        // recurse
+        dfs( root.left, x, y, level+1,root);
+        dfs( root.right, x, y,level+1, root);
+        
+    }
+}
