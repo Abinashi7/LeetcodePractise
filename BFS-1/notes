@@ -1,0 +1,5 @@
+
+-	WHAT IS BFS?
+-	BFS is processing all the children of a particular node together. In BFS we process any child either Left or Right.
+
+-	QUEUE is a better data structure to use in DFS because it is less expensive. As compare to array. 
