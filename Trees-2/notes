@@ -1,0 +1,30 @@
+
+Traversals
+
+Inorder:  only the root element matters in the center position 
+-	Left -> root -> right
+-	right-> root -> Left
+
+post order: Left -> right -> root
+
+pre order:  root -> left -> right
+
+
+Question 2: Construct Binary Tree from Preorder and Inorder Traversal
+
+tn = O(h*n^2)
+sc = O(h*n)
+
+Lecture -18-Trees-3
+
+WHAT IS BACKTRACKING? 
+-	To undo the last decision made. Or whatever action I have take I can reverse or undo it. 
+
+HOW TO WRITE BACKTRACKING?
+1.	Action
+2.	Recurse
+3.	Backtrack
+
+HOW IS BACKTRACKING DIFFERENT FROM RECURSION? 
+-	In recursion and backtracking we explore all the paths. Backtracking is efficient when you need to maintain non primitive type of a Data Structure (not a generalized statement). 
+
