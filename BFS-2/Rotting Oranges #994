@@ -1,0 +1,45 @@
+/**
+Iterative BFS solution. Here we can store all the rotten orranges in the queue and then iterate over their neighbors in the BFS manner. When an neighbor is visited, we can conver that element = 2 so that we keep track of the cells that are visited
+Tn= O(m+n) where m and n is the row and cols of the array
+sc = O(m+n)
+*/
+class Solution {
+    public int orangesRotting(int[][] grid) {
+        
+        int fresh = 0; // keeping track of many fresh oranges are there and reducing it when converted to rotten
+        Queue<int []> q = new LinkedList<>();
+        int time=0;
+        
+        int n = grid.length, m = grid[0].length;
+        for(int i=0; i < n; i++){
+            for(int j=0; j < m; j++){
+                if(grid[i][j] == 1) fresh++;
+                if(grid[i][j] == 2) q.add(new int[]{i,j}); // adding all the starting points
+            }
+        }
+        
+        if(fresh == 0) return 0; // if there are no oranges or no fresh oranges
+        int [][] dirs = {{0,1},{1,0},{-1,0},{0,-1}};
+        while(!q.isEmpty()){
+            int size = q.size();
+            
+            for(int i=0; i< size; i++){
+                int[] cur = q.poll();
+                for(int [] dir: dirs){
+                    int r = cur[0] + dir[0];
+                    int c = cur[1] + dir[1];
+
+                    if(r >= 0 && r < n && c >=0 && c < m && grid[r][c] ==1){
+                        grid[r][c] = 2;
+                        fresh--;
+                        q.add(new int[]{r,c});
+                    }
+                }
+            }
+            time++;
+        }
+        if(fresh > 0) return -1;
+        return time-1;
+        
+    }
+}
