@@ -1,0 +1,39 @@
+/**
+BFS solution. We iterate all the elements and convert to the new color in BFS manner. The starting point is going to be image[sr][sc]
+Tn = O(M*n) where m is the length of cols and n is num of rows
+sc = O(M*N)
+*/
+class Solution {
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        
+        // covering the edge case where the starting point is already the new color
+        if(image == null || image.length == 0 || image[sr][sc] == newColor) return image;
+        
+        Queue< int[] > q = new LinkedList<>();
+        
+        q.add(new int[] {sr, sc});
+        int oldColor = image[sr][sc];
+        image[sr][sc] = newColor;
+        
+        int [][] dirs = {{0,1},{1,0},{-1,0},{0,-1}};
+        int m= image[0].length, n= image.length;
+        
+        while(!q.isEmpty()){
+            
+            int [] cur = q.poll();
+            for(int [] dir: dirs){
+                int r= dir[0] + cur[0];
+                int c= dir[1] + cur[1];
+                
+                if( r>= 0 && r < n && c >=0 && c < m && image[r][c] == oldColor){
+                    image[r][c] = newColor;
+                    q.add( new int[]{r,c});
+                }
+            }
+        }
+        
+        return image;
+        
+        
+    }
+}
