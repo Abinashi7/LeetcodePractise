@@ -1,0 +1,41 @@
+/**
+dfs solution
+tn=O(2*m*n)
+sc= O(max(m, n));
+*/
+class Solution {
+    
+    int [][] dirs = {{0,1}, {1,0}, {-1, 0}, {0, -1}};
+    int counter;
+    public int numIslands(char[][] grid) {
+        
+        if(grid == null || grid.length == 0) return 0;
+        counter =0;
+        for(int i=0; i <grid.length; i++){
+            for(int j=0; j< grid[0].length; j++){
+                if(grid[i][j] == '1'){
+                    counter++;
+                    dfs(grid,i, j); 
+                }
+            }
+        }
+        return counter;
+    }
+    
+    private void dfs( char [][]grid, int i, int j){
+        // base        
+        if(grid[i][j] == '1'){
+            grid[i][j] = '0';
+        }
+        
+        // recurse and action
+        for(int[] dir: dirs){
+            int r= i+dir[0];
+            int c= j+dir[1];
+            
+            if(r >=0 && r < grid.length && c >=0 && c < grid[0].length && grid[r][c] == '1'){
+                dfs(grid, r, c);
+            }
+        }
+    }
+}
