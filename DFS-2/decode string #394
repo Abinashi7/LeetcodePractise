@@ -1,0 +1,44 @@
+class Solution {
+    public String decodeString(String s) {
+        
+        Stack<StringBuilder> str = new Stack<>();
+        Stack<Integer> num = new Stack<>();
+        
+        int curNum=0;
+        StringBuilder curString = new StringBuilder();
+        
+        for(int i=0; i < s.length(); i++){
+            
+            char c = s.charAt(i);
+            
+            if(Character.isDigit(c)){
+                curNum = curNum * 10 + c - '0';
+            }else if( c == '['){
+                str.push(curString);
+                num.push(curNum);
+                
+                curString = new StringBuilder();
+                curNum = 0;
+                
+            }else if( c == ']'){
+                
+                int iterations = num.pop();
+                StringBuilder temp = new StringBuilder();
+                 
+                
+                for(int j=0; j < iterations; j++){
+                    temp.append(curString);
+                }
+                
+                StringBuilder earlierString = str.pop();
+                curString = earlierString.append(temp);
+                
+            }else{
+                curString.append(c);
+            }
+            
+        }
+        
+        return curString.toString();
+    }
+}
