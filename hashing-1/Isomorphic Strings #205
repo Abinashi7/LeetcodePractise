@@ -1,0 +1,35 @@
+/**
+This can be solved using two hashmaps. Both of the maps are going to hold the string. One for string s and the other one string t. 
+T(n) = O(n)
+Sc = O(1). It is constant because we are going to store at max 256 chars in both the maps
+*/
+class Solution {
+    public boolean isIsomorphic(String s, String t) {
+        
+        HashMap<Character, Character> sMap = new HashMap<>();
+        HashMap<Character, Character> tMap = new HashMap<>();
+        
+        
+        for(int i=0; i < s.length(); i++){
+            char sChar = s.charAt(i);
+            char tChar = t.charAt(i);
+            
+            if(!sMap.containsKey(sChar)){
+                sMap.put(sChar, tChar);
+            }else{
+                if(sMap.get(sChar) != tChar) return false;
+            }
+            
+            if(!tMap.containsKey(tChar)){
+                tMap.put(tChar, sChar);
+            }else{
+                if(tMap.get(tChar) != sChar) return false;
+                
+            }
+        }
+        
+        return true;
+        
+        
+    }
+}
