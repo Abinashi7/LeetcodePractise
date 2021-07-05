@@ -1,0 +1,37 @@
+// recursive solution 
+// tn = O(2^n)
+// sc = O(h) height of recursive stack
+class Solution {
+    List<List<Integer>> result;
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        
+        result = new ArrayList<>();
+        
+        if(candidates == null || candidates.length==0) return result;
+        
+        
+        helper(candidates, new ArrayList<>(), target, 0, 0);
+        
+        return result;
+        
+    }
+    
+    private void helper(int[] candidates, List<Integer> temp, int target, int sum, int index){
+        
+        // base
+        if(sum > target || index >= candidates.length) return;
+        if(sum == target) {
+            result.add(temp);
+            return;
+            }
+        // action and recurse
+        
+        // not choose
+        helper(candidates, new ArrayList<>(temp), target, sum, index +1);
+        
+        // choose
+        temp.add(candidates[index]);
+        helper(candidates, new ArrayList<>(temp), target, sum+candidates[index], index);
+        
+    }
+}
