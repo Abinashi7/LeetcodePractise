@@ -1,0 +1,79 @@
+class LRUCache {
+    
+    class Node {
+        int key;
+        int val;
+        Node next;
+        Node prev;
+        
+        Node(int key, int val){
+            this.key = key;
+            this.val = val;
+        }
+    }
+    int cap;
+    Map<Integer, Node> map;
+    Node head, tail;
+
+    private void addToHead(Node newNode){
+        // make the dummy point to the new node
+        // adjust the next node of the new node to the prev node at the head
+        head.next.prev = newNode;
+        newNode.prev = head;
+        newNode.next = head.next;
+        head.next = newNode;
+        
+        
+    }
+    
+    private void removeNode(Node node){
+        // get the reference nd remove from map
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+    }
+    public LRUCache(int capacity) {
+        cap = capacity;
+        map = new HashMap<>();
+        head = new Node(-1, -1); // dummy head
+        tail = new Node(-1, -1); // dummy tail
+        
+        head.next = tail;
+        tail.prev = head;
+    }
+    
+    public int get(int key) {
+        if(!map.containsKey(key)) return -1;
+        Node res = map.get(key);
+        removeNode(res);
+        addToHead(res);
+        return res.val;
+    }
+    
+        public void put(int key, int value) {
+        
+        if(map.containsKey(key)){
+            Node cur = map.get(key); // get the existing value of the key
+            cur.val = value; // updating its existing value to the new value
+            removeNode(cur); // remove it from the linked list to change its position to be the most recent
+            addToHead(cur); // add it to the head of the linked list
+        }else{
+            Node newNode = new Node(key, value);
+            // to add new node, first condition is to check if the cache capacity is already full
+            if(map.size() == cap){
+                // remove the least recently used node
+                Node lastVal = tail.prev; //least used value would be prev to the tail node
+                removeNode(lastVal);
+                map.remove(lastVal.key);
+            }
+            addToHead(newNode);
+            map.put(key, newNode);
+        }
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
