@@ -1,0 +1,26 @@
+/** 
+Solution using priority queue in which we will only mainin k elements. We can use the min heap for the priority queue (which is the default in pq). Compare the top most element with the incoming element and add in the pq accordingly. 
+
+T(n) = O(n log k) n is the len of the nums and k is the given kth element to return
+sc = O(k) where k is the num of elements to maintain in queue
+*/
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        
+        for(int i: nums){
+            
+            if(pq.size() == k){
+                if( i > pq.peek()){
+                    pq.poll();
+                    pq.add(i);
+                }
+            }else{
+                pq.add(i);
+            }
+        }
+        
+        return pq.peek();
+        
+    }
+}
