@@ -1,0 +1,43 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+/**
+Heap solution for merging both the lists. maintaining the current ListNode type pointers in the priority Queue(min heap). Add the top node(minimum) in the priority queue to the resultant ListNode. Move the pointer to the next element of the current listNode at top of the queue. Continue until the q is empty
+TC = nk*log(k) where n is the num of elements in one list * k number of lists. log k to maintain top k nodes in the priority queue
+SC= k size of the priority queue maintaining k heads of the given lists
+*/
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        if(lists == null || lists.length == 0) return null;
+        
+        PriorityQueue<ListNode> pq = new PriorityQueue<>( (a,b)-> a.val - b.val);
+        ListNode cur = new ListNode(-1); // dummy node
+        ListNode result = cur; // resultant list
+        
+        // fill all the heads of the k lists
+        for(ListNode head: lists){
+            if(head != null) pq.add(head);
+        }
+        
+        // itearate and add the min node to the resultant list
+        while(!pq.isEmpty()){
+            ListNode curMin = pq.poll();
+            
+            cur.next = curMin;
+            cur = cur.next;
+            
+            if(curMin.next != null){ // checking if the curList node has reached the end or not
+                pq.add(curMin.next);
+            }
+        }
+        
+        return result.next;
+    }
+}
