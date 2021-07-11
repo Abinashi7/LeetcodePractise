@@ -1,0 +1,46 @@
+/**
+Building Trie dictionary of the given words and iterating all the nodes in the bfs manner until the end of TrieNode. 
+*/
+class Solution {
+    TrieNode root = new TrieNode();
+    class TrieNode{
+        String word;
+        TrieNode [] chars; // all 26 chars in a node
+        
+        TrieNode(){
+            chars = new TrieNode[26];
+        }
+    }
+    // filling Trie dictionary
+    private void insert(String s){
+        TrieNode cur = root;
+        
+        for(char c: s.toCharArray()){
+            if(cur.chars[c-'a'] == null){
+                cur.chars[c-'a'] = new TrieNode();
+            }
+            cur = cur.chars[c-'a'];
+        }
+        cur.word = s;
+    }
+    public String longestWord(String[] words) {
+        
+        for(String word: words){
+            insert(word);
+        }
+        Queue<TrieNode> q = new LinkedList<>();
+        q.add(root);
+        TrieNode cur = null;
+        while(!q.isEmpty()){
+             cur = q.poll();
+            for(int i = 25; i >=0; i--){
+                if(cur.chars[i] != null && cur.chars[i].word != null){
+                    q.add(cur.chars[i]);
+                }
+            }
+        }
+        if(cur.word == null) return "";
+
+        return cur.word;
+    }
+}
