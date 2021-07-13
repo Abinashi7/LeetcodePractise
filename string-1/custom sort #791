@@ -1,0 +1,43 @@
+class Solution {
+    public String customSortString(String order, String str) {
+        
+        HashMap<Character, Integer> map = new HashMap<>();
+        for(int i=0; i< str.length(); i++){
+            Character c = str.charAt(i);
+            map.put(c, map.getOrDefault(c, 0) +1);
+        }
+        
+        // iterating over the order array and forming resultant string
+        StringBuilder sb = new StringBuilder();
+        
+        for(int i=0 ; i < order.length(); i++){
+            char c= order.charAt(i);
+            
+            if(map.containsKey(c)){
+                int itrs = map.get(c);
+                // append that char that many times
+                while(itrs > 0){
+                    sb.append(c);
+                    itrs--;
+                }
+                
+                map.remove(c);
+            }
+        }
+        
+        // iterate over the map and append the remaining strings
+        
+        for(Map.Entry<Character, Integer> wrd: map.entrySet()){
+            char c = wrd.getKey();
+            int itrs = wrd.getValue();
+            
+            while(itrs > 0){
+                sb.append(c);
+                itrs--;
+            }
+        }
+        
+        return sb.toString();
+        
+    }
+}
