@@ -1,0 +1,21 @@
+/**
+Tn = O(n)
+sc = O(26)
+*/
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        
+        int max=0, slow = 0;
+        HashMap<Character, Integer> map = new HashMap<>();
+        
+        for(int fast= 0; fast < s.length(); fast++){
+            char c = s.charAt(fast);
+            if(map.containsKey(c)){
+                slow = Math.max( map.get(c), slow);
+            }
+            max = Math.max(max, fast-slow+1);
+            map.put(c, fast+1);
+        }
+        return max;
+    }
+}
