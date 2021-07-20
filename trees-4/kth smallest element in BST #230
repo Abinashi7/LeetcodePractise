@@ -29,3 +29,34 @@ class Solution {
         helper(root.right);
     }
 }
+
+>>>>>>>>>>>>>>>>> Iterative solution >>>>>>>>>>>>>
+
+/**
+Iterative solution. Using stack. Iterating in Inorder and building stack.
+Tn = O(n)
+sc = O(n)
+*/
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        
+        int count = k;
+        Stack<TreeNode> st = new Stack<>();
+        
+        while(root!= null || !st.empty()){
+            
+            while(root != null){
+                
+                st.push(root);
+                root = root.left;
+            }
+            
+            root = st.pop();
+            count --;
+            if(count == 0) return root.val;
+            root = root.right;
+        }
+        
+        return count;
+    }
+}
