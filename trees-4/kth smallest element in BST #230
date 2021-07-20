@@ -1,0 +1,31 @@
+/**
+Recursive solution. Using Inorder traversal to iterate. When recursive stack is coming back, decrease K until it's 0. 
+t(n) = O(n) where n is num of elements in tree. Worst case = skewed tree
+Sc = O(n)
+*/
+class Solution {
+    int count;
+    int result;
+    public int kthSmallest(TreeNode root, int k) {
+        count = k;
+        
+        helper(root);
+        
+        return result;
+    }
+    
+    
+    private void helper(TreeNode root){
+        // base
+        if(root == null) return;        
+        // recurse and action
+        helper(root.left);
+        count --;
+        if(count == 0){
+           result = root.val;
+            return;
+        } 
+        
+        helper(root.right);
+    }
+}
