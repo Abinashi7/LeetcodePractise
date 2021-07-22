@@ -26,3 +26,27 @@ class Solution {
         
     }
 }
+
+>>>>>>>>>>>>>> Optimized solution >>>>>>>>>>>>>>>>>>>
+class Solution {
+    public Node connect(Node root) {
+        
+        if(root == null) return root;
+        
+        Node level = root; // represents the current level that is being iterated or used to switch levels
+        
+        while(level.left != null){
+            Node cur = level; // cur pointer will iterate over the nodes of a particular level and adjust the next pointers 
+            
+            while(cur != null){
+                cur.left.next = cur.right; // parent adjusting its children next pointers
+                if(cur.next != null){
+                    cur.right.next = cur.next.left;
+                }
+                cur = cur.next; // going to the next node of the same level to adjust pointers
+            }
+            level = level.left; // moving to the next level. Using only left pointer because it is a perfect binary tree
+        }
+        return root;
+    }
+}
