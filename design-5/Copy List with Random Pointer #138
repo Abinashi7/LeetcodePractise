@@ -1,0 +1,50 @@
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
+
+class Solution {
+    HashMap<Node, Node> map;
+    public Node copyRandomList(Node head) {
+        
+        if(head == null) return head;
+        map = new HashMap<>();
+        Node cur = head; // maintaining cur copy on the head
+        Node deepCopy = clone(cur); // get a cloned copy of the original head
+        
+        while( cur != null){ // iterating over the original copy
+            deepCopy.next = clone(cur.next);
+            deepCopy.random = clone(cur.random);
+            deepCopy = deepCopy.next;
+            cur = cur.next;
+        }
+        
+        return map.get(head);
+        
+    }
+    
+    // make a deep copy of the given node
+    private Node clone(Node original){
+        
+        if(original == null) return null; 
+        
+        Node copy = map.get(original);
+        // creating a mapping of original and deep copy nodes
+        if(copy == null){
+            copy = new Node(original.val);
+            map.put(original, copy);
+        }
+        return copy;
+        
+    }
+}
