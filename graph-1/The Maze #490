@@ -1,0 +1,45 @@
+/**
+Iterative solution using BFS approach. Using queue data structure
+T(n) = m*n where m is num of rows and n is num of cols
+s(c) = Max(m, n)
+*/
+class Solution {
+    public boolean hasPath(int[][] maze, int[] start, int[] destination) {
+        
+        Queue<int []> q = new LinkedList<>();
+        maze[start[0]][start[1]] = 2; // marking path as visited
+        q.add(start);
+        int m = maze.length, n = maze[0].length;
+        
+        int [][] dirs = {{1,0}, {0,1}, {-1, 0}, {0, -1}};
+        
+        while(!q.isEmpty()){
+            
+            int [] cur = q.poll();
+            if( cur[0] == destination[0] && cur[1] == destination[1]) return true;
+            for( int [] dir: dirs){
+                int r = cur[0], c = cur[1];
+                
+                while(r >= 0 && r <m && c >=0 && c < n && maze[r][c] != 1){
+                    // if the above condition is met then take a particular direction
+                    r += dir[0];
+                    c+= dir[1];
+                }
+                
+                // to prevent the overshoot of the boundaries
+                // overshooting means the ball has to stay right next to the bouday after stopping..not overshooting the boundary
+                r -= dir[0];
+                c -= dir[1];
+                
+                // of this is not an already seen path
+                if(maze[r][c] != 2){
+                    maze[r][c] = 2;
+                    q.add( new int []{r, c});
+                }
+            }
+        }
+        
+        return false;
+        
+    }
+}
