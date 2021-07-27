@@ -114,3 +114,142 @@ class LFUCache {
     }
 
 }
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+class LFUCache {
+    // create node
+    class Node{
+        Node prev;
+        Node next;
+        int key; int val; int count;
+        
+        public Node(int key, int val){
+            this.key = key;
+            this.val = val;
+            this.count=1;
+        }
+    }
+    
+    class DLList{
+        Node head;
+        Node tail;
+        int size;
+        
+        public DLList(){
+             head = new Node(-1, -1);
+             tail = new Node(-1, -1);
+            
+            head.next = tail;
+            tail.prev = head;
+            
+        }
+        
+        // methods of this Doubly linked list
+        
+        // adding incoming node to head
+        public void addToHead(Node node){
+            node.next = head.next;
+            node.prev = head;
+            head.next = node;
+            node.next.prev = node;
+            size++;
+        }
+        
+        // remove a node with reference
+        public void remove(Node node){
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
+            size--;
+        }
+        
+        public Node removeFromLast(){
+            Node nodeToRemove = tail.prev;
+            remove(nodeToRemove);
+            return nodeToRemove;  
+        }
+    }
+    int min;
+    int cap;
+    HashMap<Integer, Node> map;
+    HashMap<Integer, DLList> frq; // frequency map
+    public LFUCache(int capacity) {
+        
+        this.cap = capacity;
+        map = new HashMap<>();
+        frq = new HashMap<>();
+
+    }
+    
+    public int get(int key) {
+        // when the node already exists
+        
+        Node node = map.get(key);
+        
+        if(node != null){
+            update(node);
+            return node.val;
+        }
+        
+        return -1; // in case node does not exist
+    }
+    
+    // update the frquency and the position of a particular node
+    private void update(Node node){
+        
+        // get the node from frequency map, remove it from it's current pos and add to the new freq
+        
+        DLList listToUpdate = frq.get(node.count);
+        listToUpdate.remove(node);
+        if(listToUpdate.size == 0 && node.count == min) min++;
+        
+        node.count++;
+        
+        // now add to the new frquency list. If that new frq list was never made then creat one.
+        DLList newList = frq.getOrDefault(node.count, new DLList());
+        
+        newList.addToHead(node);
+        
+        // update the frq map to the newly created list with new frequency
+        frq.put(node.count, newList);
+        
+        // then update it's count in the map
+        
+        map.put(node.key, node);
+        
+    }
+    
+    public void put(int key, int value) {
+        if(cap == 0) return;
+        // if key already exists
+        if(map.containsKey(key)){
+            Node node = map.get(key);
+            node.val = value;
+            update(node);
+        }else{
+        // if the cap has already reached
+            if(map.size() == cap){
+                DLList ListOfnodeToBeRemoved = frq.get(min);
+                Node removedNode = ListOfnodeToBeRemoved.removeFromLast();
+                map.remove(removedNode.key);
+            }
+            
+            Node newNode = new Node(key, value);
+            min=1;
+            DLList minList = frq.getOrDefault(min, new DLList());
+            
+            minList.addToHead(newNode);
+            frq.put(min, minList);
+            map.put(key, newNode);
+        }
+        
+        
+    }
+}
+
+/**
+ * Your LFUCache object will be instantiated and called as such:
+ * LFUCache obj = new LFUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
