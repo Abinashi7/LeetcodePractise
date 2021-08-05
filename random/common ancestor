@@ -1,0 +1,60 @@
+import java.util.*;
+/**
+ * Pt. 1 Suppose we have some input data describing a graph of relationships between parents and children over multiple generations. The data is formatted as a list of (parent, child) pairs, where each individual is assigned a unique integer identifier.
+ * For example, in this diagram, 3 is a child of 1 and 2, and 5 is a child of 4:
+ *
+ * parentChildPairs = [  (1, 3), (2, 3), (3, 6), (5, 6),
+ *                    (5, 7), (4, 5), (4, 8), (8, 10)  ]
+ * 复制代码Write a function that takes this data as input and returns two collections: one containing all individuals with zero known parents, and one containing all individuals with exactly one known parent.
+ * findNodesWithZeroAndOneParents(parentChildPairs) =>
+ *                                   [ [1, 2, 4],    // Individuals with zero parents
+ *                                   [5, 7, 8, 10] // Individuals with exactly one parent ]
+ *
+
+ * */
+class test2{
+    public static List<List<Integer>> commonAncestor1(int[][] pairs){
+        // creating map from child's perspective. And at the same time adding parent's parent (which makes that parent a child)
+        List<List<Integer>> ans = new ArrayList<>();
+        ans.add(0, new ArrayList<>());
+        ans.add(1, new ArrayList<>());
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for( int[] pair: pairs){
+
+            int child = pair[1];
+            int parent = pair[0];
+
+            map.put(child, map.getOrDefault(child, 0)+1);
+            map.put(parent, map.getOrDefault(parent, 0));
+
+        }
+
+        for(int key: map.keySet()){
+            if(map.get(key) == 0){
+                ans.get(0).add(key);
+            }else if(map.get(key) == 1){
+                ans.get(1).add(key);
+            }
+        }
+
+        return ans;
+
+    }
+
+
+
+
+    public static void main(String[] args){
+
+//        int [][] arr  ={  {1, 3}, {2, 3}, (3, 6), (5, 6),
+//        (5, 7), (4, 5), (4, 8), (8, 10)   }
+
+        int [][] arr  = {  {1, 3}, {2, 3}, {3, 6}, {5, 6},{5, 7}, {4, 5},{4, 8}, {8, 10}   };
+
+        System.out.print(commonAncestor1(arr));
+    }
+
+
+}
