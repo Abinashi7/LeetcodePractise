@@ -1,0 +1,48 @@
+/**
+Wrap Lines:
+
+Pt.1 Connecting words with '-' as blank spaces, no exceeds maxLength
+
+Input: String[] words, int maxLength.
+Output: List lines.
+    e.g. ["1p3acres", "is", "a", "good", "place", "to", "communicate"], 12 => {"1p3acres-is", "a-good-place", "for", "communicate"}
+
+*/
+
+import java.util.*;
+
+class test2{
+    public static List<String> wrapLines1(String[] words, int maxLength){
+        List<String> ans = new ArrayList<>();
+        //"1p3acres", "is", "a", "good", "place", "to", "communicate"
+        StringBuilder sb = new StringBuilder();
+        int i=0;
+        while( i < words.length){
+
+
+            if(sb.length() == 0){
+                sb.append(words[i++]);
+            }else if( sb.length() +1 + words[i].length() <= maxLength){
+                sb.append('-');
+                sb.append(words[i++]);
+            }else{
+                ans.add(sb.toString());
+                sb = new StringBuilder();
+            }
+        }
+
+        if(sb.length() != 0) ans.add(sb.toString());
+
+        return ans;
+    }
+
+
+    public static void main(String[] args){
+
+        String[] arr = {"1p3acres", "is", "a", "good", "place", "to", "communicate"};
+
+        System.out.print(wrapLines1(arr, 12));
+    }
+
+
+}
