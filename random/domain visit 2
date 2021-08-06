@@ -1,0 +1,68 @@
+import java.util.*;
+
+class test2{
+    public static List<String> domainVisit2(String[] visit1, String[] visit2){
+
+        List<String> ans = new ArrayList<>();
+        int n = Math.max(visit1.length, visit2.length);
+
+        int [][] dp = new int[n+1][n+1];
+        int [] maxIndex = new int[2];
+        int max = 0;
+        for(int i=1; i<= visit1.length; i++){
+            for( int j=1; j<= visit2.length; j++){
+                String cur1 = visit1[i-1];
+                String cur2 = visit2[j-1];
+//i < visit1.length && j < visit1.length && i < visit2.length && j < visit2.length &&
+                if(
+                        visit1[i-1].equals(visit2[j-1])){
+                    dp[i][j] = 1 + dp[i-1][j-1];
+//                    System.out.print(dp[i][j]);
+
+                    if(dp[i][j] >= max){
+                        max = dp[i][j];
+                        maxIndex[0] = i;
+                        maxIndex[1] = j;
+                    }
+                }
+
+            }
+        }
+
+
+
+        int i = maxIndex[0];
+        int j = maxIndex[1];
+
+        while (dp[i][j] != 0){
+            if(visit1[i-1].equals(visit2[j-1])){
+                ans.add(visit1[i-1]);
+            }
+            i--;
+            j--;
+        }
+        return ans;
+
+    }
+
+
+
+
+
+
+
+
+    public static void main(String[] args){
+
+//        String[] a1 = {"3234.html", "xys.html", "7hsaa.html"};
+//        String[] a2 = {"3234.html", "sdhsfjdsh.html", "xys.html", "7hsaa.html"};
+
+        String[] a1 = {"e", "f", "g", "h"};
+        String[] a2 = {"a", "e", "f", "d"};
+
+        System.out.print(domainVisit2(a1, a2));
+
+    }
+
+
+}
