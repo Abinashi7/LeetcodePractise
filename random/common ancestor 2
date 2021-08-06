@@ -1,0 +1,70 @@
+import java.util.*;
+
+class test2{
+    public static List<List<Integer>> commonAncestor1(int[][] pairs){
+        // creating map from child's perspective. And at the same time adding parent's parent (which makes that parent a child)
+        List<List<Integer>> ans = new ArrayList<>();
+        ans.add(0, new ArrayList<>());
+        ans.add(1, new ArrayList<>());
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for( int[] pair: pairs){
+
+            int child = pair[1];
+            int parent = pair[0];
+
+            map.put(child, map.getOrDefault(child, 0)+1);
+            map.put(parent, map.getOrDefault(parent, 0));
+
+        }
+
+        for(int key: map.keySet()){
+            if(map.get(key) == 0){
+                ans.get(0).add(key);
+            }else if(map.get(key) == 1){
+                ans.get(1).add(key);
+            }
+        }
+
+        return ans;
+
+    }
+
+    public static boolean commonAncestor2(int[][] pairs, int node1, int node2){
+        Set<Integer> p1 = new HashSet<>(), p2 = new HashSet<>();
+        help_commonAncestor2(p1, node1, pairs);
+        help_commonAncestor2(p2, node2, pairs);
+        for(int parent : p1){
+            if(p2.contains(parent)) return true;
+        }
+        return false;
+    }
+
+    public static void help_commonAncestor2(Set<Integer> parents, int node, int[][] pairs){
+        for(int[] pair : pairs){
+            if(pair[1] == node){
+                parents.add(pair[0]);
+                help_commonAncestor2(parents, pair[0], pairs);
+            }
+        }
+    }
+
+
+
+
+
+    public static void main(String[] args){
+
+//        int [][] arr  ={  {1, 3}, {2, 3}, (3, 6), (5, 6),
+//        (5, 7), (4, 5), (4, 8), (8, 10)   }
+
+        int [][] arr  = {  {1, 3}, {2, 3}, {3, 6}, {5, 6},{5, 7}, {4, 5},{4, 8}, {8, 10}   };
+
+        System.out.print(commonAncestor1(arr));
+
+        System.out.print(commonAncestor2(arr, 5,8));
+    }
+
+
+}
