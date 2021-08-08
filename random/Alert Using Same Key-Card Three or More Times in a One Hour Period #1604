@@ -1,0 +1,46 @@
+class Solution {
+    public List<String> alertNames(String[] keyName, String[] keyTime) {
+        
+        
+        HashMap<String, List<Integer>> map = new HashMap<>();
+        
+        for(int i=0; i < keyName.length; i++){
+            
+            if(!map.containsKey(keyName[i])){
+                map.put(keyName[i], new ArrayList<>());
+            }
+            
+            // conver the time
+            map.get(keyName[i]).add( converTime(keyTime[i]) );
+        }
+        List<String> ans = new ArrayList<>();
+        
+        for(String name: map.keySet()){
+            
+            if( isFlagged( map.get(name) )){
+                ans.add(name);
+            }
+        }
+        Collections.sort(ans);
+        return ans;
+    }
+                        
+    private int converTime(String time ){
+        
+        String[] cur = time.split(":");
+        
+        return Integer.parseInt(cur[0]) *60 + Integer.parseInt(cur[1]);
+    }
+    
+    private boolean isFlagged(List<Integer> ls){
+        if(ls.size() >= 3){
+        Collections.sort(ls);
+            
+            for(int i =2; i < ls.size(); i++){
+                if( ls.get(i) - ls.get( i - 2) <= 60) return true;
+            }
+        }
+        
+        return false;
+    }
+}
