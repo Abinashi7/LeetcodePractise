@@ -1,0 +1,93 @@
+import java.util.*;
+/**
+ * Pt.1
+ * We are working on a security system for a badged-access room in our company's building. Given an ordered list of employees who used their badge to enter or exit the room, write a function that returns two collection
+ *
+ *
+ * All employees who didn't use their badge while exiting the room – they recorded an enter without a matching exix
+ * All employees who didn't use their badge while entering the room  – they recorded an exit without a matching enter
+ *
+ * badge_records = [
+ *   ["Martha",   "exit"],
+ *   ["Paul",     "enter"],. 1point3acres.com/bbs
+ *   ["Martha",   "enter"],
+ *   ["Martha",   "exit"],
+ *   ["Jennifer", "enter"],. more info on 1point3acres.com
+ *   ["Paul",     "enter"],. From 1point 3acres bbs
+ *   ["Curtis",   "enter"],
+ *   ["Paul",     "exit"],
+ *   ["Martha",   "enter"],
+ *   ["Martha",   "exit"],
+ *   ["Jennifer", "exit"],
+ * ]
+ * find_mismatched_entries(badge_records)
+ * Expected output: ["Paul", "Curtis"], ["Martha"]
+ * 复制代码
+ *
+ * */
+class test2 {
+    static class Emp{
+        int exit;
+        int enter;
+    }
+    public static List<List<String>> badgeAccess(String[][] logs){
+
+        List<List<String>> ans = new ArrayList<>();
+        HashMap<String, Emp> map = new HashMap<>();
+        // create mapping
+        for( String[] log: logs){
+            String name = log[0];
+            String info = log[1];
+
+            if(!map.containsKey(name)){
+                map.put(name, new Emp());
+            }
+
+            if(info.equals("enter")){
+                map.get(name).enter++;
+            }else{
+                map.get(name).exit++;
+            }
+        }
+
+        ans.add(0, new ArrayList<>());
+        ans.add(1, new ArrayList<>());
+
+        for(String emp: map.keySet()){
+            Emp cur = map.get(emp);
+            if(cur.enter>cur.exit){
+                ans.get(0).add(emp);
+            }else if(cur.enter < cur.exit){
+                ans.get(1).add(emp);
+            }
+        }
+
+        return ans;
+
+    }
+
+
+    public static void main(String[] args){
+
+        String[][] arr =  {
+                {"Martha",   "exit"},
+                {"Paul",     "enter"}
+                , {"Martha",   "enter"},
+                {"Martha",   "exit"},
+                {"Jennifer", "enter"},
+                {"Paul",     "enter"},
+                {"Curtis",   "enter"},
+                {"Paul",     "exit"},
+                {"Martha",   "enter"},
+                {"Martha",   "exit"},
+                {"Jennifer", "exit"}
+
+        };
+
+        System.out.print(badgeAccess(arr)
+        );
+
+    }
+
+
+}
