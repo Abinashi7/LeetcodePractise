@@ -1,0 +1,54 @@
+import java.util.*;
+
+public class test3 {
+    public static String countDomains(int [] nums, int k){
+
+
+        if( nums .length <= k) return "";
+
+        Queue<Integer> q = new LinkedList<>();
+
+        for(int i: nums){
+            q.add(i);
+        }
+
+        while (!q.isEmpty() && q.size() > k){
+
+
+            int size = q.size();
+
+            for(int i=0; i < size;){
+
+                int j=0, sum=0;
+                while( j< k && i < size){
+                    sum+= q.poll();
+
+                    j++; i++;
+                }
+
+                q.add(sum);
+
+            }
+
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        for(int i: q){
+
+            sb.append(i);
+        }
+
+        return sb.toString();
+    }
+
+    public static void main(String[] argv) {
+        int[] counts = { 1,1,1,1,1,2,2,2,2,2
+
+        };
+
+        System.out.print(countDomains(counts, 5));
+
+
+    }
+}
